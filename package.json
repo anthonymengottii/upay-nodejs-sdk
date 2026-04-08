@@ -1,0 +1,54 @@
+{
+  "name": "@upay/upay-js",
+  "version": "1.0.0",
+  "description": "SDK oficial da Upay para JavaScript/TypeScript - Integração fácil com a API de pagamentos",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && tsc --project tsconfig.esm.json",
+    "build:watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "test": "node dist/test.js",
+    "test:dev": "ts-node test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "upay",
+    "payment",
+    "pix",
+    "boleto",
+    "credit-card",
+    "gateway",
+    "sdk",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Upay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthonymengottii/upay-nodejs-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthonymengottii/upay-nodejs-sdk/issues"
+  },
+  "homepage": "https://github.com/anthonymengottii/upay-nodejs-sdk#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "undici": "^6.23.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.0.0"
+  }
+}

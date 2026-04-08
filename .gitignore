@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+*.tsbuildinfo
+packages/
+# Arquivos de teste local
+test.ts
+test-with-key.ts
+TESTE.md
