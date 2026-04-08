@@ -131,6 +131,17 @@ export class HttpClient {
         throw handleApiError(response, body);
       }
 
+      // Desempacota o envelope padrão: { success: true, data: X, pagination?: Y }
+      if (body && typeof body === 'object' && body.success === true && 'data' in body) {
+        if (body.pagination !== undefined) {
+          return { data: body.data, pagination: body.pagination } as T;
+        }
+        if (body.meta !== undefined) {
+          return { data: body.data, meta: body.meta } as T;
+        }
+        return body.data as T;
+      }
+
       return body as T;
     } catch (error: any) {
       clearTimeout(timeoutId);

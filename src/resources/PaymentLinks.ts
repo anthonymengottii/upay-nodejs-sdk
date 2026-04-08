@@ -32,7 +32,7 @@ export class PaymentLinksResource {
       throw new Error('Valor mínimo é R$ 1,00 (100 centavos)');
     }
 
-    const response = await this.http.post<any>('/payment-links', {
+    return this.http.post<PaymentLink>('/payment-links', {
       title: title,
       description: data.description,
       amount: data.amount,
@@ -46,16 +46,13 @@ export class PaymentLinksResource {
       stockQuantity: data.stockQuantity,
       stockEnabled: data.stockEnabled,
     });
-    
-    // Mapear resposta da API: { message, data } -> retornar data diretamente
-    return response.data || response;
   }
 
   /**
    * Lista links de pagamento
    */
   async list(params?: PaginationParams & { status?: string }): Promise<PaginatedResponse<PaymentLink>> {
-    const response = await this.http.get<any>('/payment-links', {
+    return this.http.get<PaginatedResponse<PaymentLink>>('/payment-links', {
       page: params?.page,
       limit: params?.limit,
       cursor: params?.cursor,
@@ -63,12 +60,6 @@ export class PaymentLinksResource {
       orderDirection: params?.orderDirection,
       status: params?.status,
     });
-    
-    // Mapear resposta da API: { message, paymentLinks, pagination } -> { data, pagination }
-    return {
-      data: response.paymentLinks || response.data || [],
-      pagination: response.pagination || { total: 0, page: 1, limit: 10 }
-    };
   }
 
   /**
@@ -78,9 +69,7 @@ export class PaymentLinksResource {
     if (!id) {
       throw new Error('ID é obrigatório');
     }
-    const response = await this.http.get<any>(`/payment-links/${id}`);
-    // Mapear resposta da API: { message, paymentLink } -> retornar paymentLink
-    return response.paymentLink || response.data || response;
+    return this.http.get<PaymentLink>(`/payment-links/${id}`);
   }
 
   /**
@@ -90,9 +79,7 @@ export class PaymentLinksResource {
     if (!slug) {
       throw new Error('Slug é obrigatório');
     }
-    const response = await this.http.get<any>(`/payment-links/slug/${slug}`);
-    // Mapear resposta da API: { message, paymentLink } -> retornar paymentLink
-    return response.paymentLink || response.data || response;
+    return this.http.get<PaymentLink>(`/payment-links/slug/${slug}`);
   }
 
   /**

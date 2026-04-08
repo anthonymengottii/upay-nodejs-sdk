@@ -41,7 +41,7 @@ export class TransactionsResource {
     paymentMethod?: string;
     clientId?: string;
   }): Promise<PaginatedResponse<Transaction>> {
-    const response = await this.http.get<any>('/transactions', {
+    return this.http.get<PaginatedResponse<Transaction>>('/transactions', {
       page: params?.page,
       limit: params?.limit,
       cursor: params?.cursor,
@@ -51,12 +51,6 @@ export class TransactionsResource {
       method: params?.paymentMethod,
       clientId: params?.clientId,
     });
-    
-    // Mapear resposta da API: { message, transactions, pagination } -> { data, pagination }
-    return {
-      data: response.transactions || response.data || [],
-      pagination: response.pagination || { total: 0, page: 1, limit: 10 }
-    };
   }
 
   /**
