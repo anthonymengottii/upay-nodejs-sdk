@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="logo/light.png">
+    <source media="(prefers-color-scheme: light)" srcset="logo/dark.png">
+    <img src="logo/dark.png" alt="Upay" height="60">
+  </picture>
+</p>
+
 # @upay/upay-js
 
 SDK oficial da Upay para JavaScript/TypeScript. Integre facilmente pagamentos PIX, cartão de crédito e boleto no seu sistema.
