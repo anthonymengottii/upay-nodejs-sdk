@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-# @upay/upay-js
+# Upay NodeJS SDK
 
 SDK oficial da Upay para JavaScript/TypeScript. Integre facilmente pagamentos PIX, cartão de crédito e boleto no seu sistema.
 
