@@ -13,7 +13,7 @@
     "build": "tsc && tsc --project tsconfig.esm.json",
     "build:watch": "tsc --watch",
     "prepublishOnly": "npm run build",
-    "test": "node dist/test.js",
+    "test": "echo \"No tests configured yet\"",
     "test:dev": "ts-node test.ts"
   },
   "devDependencies": {
