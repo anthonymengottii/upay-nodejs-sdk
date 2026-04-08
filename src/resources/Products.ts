@@ -37,13 +37,17 @@ export class ProductsResource {
    * Lista produtos
    */
   async list(params?: PaginationParams): Promise<PaginatedResponse<Product>> {
-    return this.http.get<PaginatedResponse<Product>>('/products', {
+    const response = await this.http.get<any>('/products', {
       page: params?.page,
       limit: params?.limit,
       cursor: params?.cursor,
       orderBy: params?.orderBy,
       orderDirection: params?.orderDirection,
     });
+    return {
+      data: response.products || response.data || [],
+      pagination: response.pagination || { total: 0, page: 1, limit: 10 },
+    };
   }
 
   /**

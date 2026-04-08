@@ -32,7 +32,7 @@ export class PaymentLinksResource {
       throw new Error('Valor mínimo é R$ 1,00 (100 centavos)');
     }
 
-    return this.http.post<PaymentLink>('/payment-links', {
+    const response = await this.http.post<any>('/payment-links', {
       title: title,
       description: data.description,
       amount: data.amount,
@@ -46,13 +46,14 @@ export class PaymentLinksResource {
       stockQuantity: data.stockQuantity,
       stockEnabled: data.stockEnabled,
     });
+    return response.paymentLink || response.data || response;
   }
 
   /**
    * Lista links de pagamento
    */
   async list(params?: PaginationParams & { status?: string }): Promise<PaginatedResponse<PaymentLink>> {
-    return this.http.get<PaginatedResponse<PaymentLink>>('/payment-links', {
+    const response = await this.http.get<any>('/payment-links', {
       page: params?.page,
       limit: params?.limit,
       cursor: params?.cursor,
@@ -60,6 +61,10 @@ export class PaymentLinksResource {
       orderDirection: params?.orderDirection,
       status: params?.status,
     });
+    return {
+      data: response.paymentLinks || response.data || [],
+      pagination: response.pagination || { total: 0, page: 1, limit: 10 },
+    };
   }
 
   /**
@@ -69,7 +74,8 @@ export class PaymentLinksResource {
     if (!id) {
       throw new Error('ID é obrigatório');
     }
-    return this.http.get<PaymentLink>(`/payment-links/${id}`);
+    const response = await this.http.get<any>(`/payment-links/${id}`);
+    return response.paymentLink || response.data || response;
   }
 
   /**
@@ -79,7 +85,8 @@ export class PaymentLinksResource {
     if (!slug) {
       throw new Error('Slug é obrigatório');
     }
-    return this.http.get<PaymentLink>(`/payment-links/slug/${slug}`);
+    const response = await this.http.get<any>(`/payment-links/slug/${slug}`);
+    return response.paymentLink || response.data || response;
   }
 
   /**

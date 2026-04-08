@@ -42,17 +42,20 @@ export class CouponsResource {
       },
       body: JSON.stringify({
         code: data.code.trim(),
-        amountCents: data.amountCents,
+        amount: data.amountCents,
         productIds: data.productIds || [],
       }),
     });
 
-    if (!response.ok) {
-      const error: any = await response.json().catch(() => ({ message: 'Erro ao validar cupom' }));
-      throw new Error(error.message || `HTTP ${response.status}`);
+    const result: any = await response.json().catch(() => null);
+    if (!result) {
+      throw new Error(`HTTP ${response.status}`);
     }
 
-    const result: any = await response.json();
+    // 400 com { valid: false } é uma resposta válida (cupom inválido/não encontrado)
+    if (!response.ok && result.valid === undefined) {
+      throw new Error(result.message || result.error || `HTTP ${response.status}`);
+    }
     
     // Normalizar resposta para o formato esperado
     return {
