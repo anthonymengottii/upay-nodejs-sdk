@@ -45,9 +45,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {
-    "undici": "^6.23.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "typescript": ">=4.0.0"
   }

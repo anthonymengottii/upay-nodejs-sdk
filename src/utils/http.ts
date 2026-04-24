@@ -5,34 +5,8 @@
 import { handleApiError } from './errors';
 import type { UpayConfig } from '../types';
 
-// Polyfill para fetch no Node.js < 18
-let fetchImpl: typeof fetch;
-if (typeof fetch === 'undefined') {
-  // Node.js < 18 - usar undici
-  try {
-    const undici = require('undici');
-    const { fetch: undiciFetch, Agent } = undici;
-    // Configurar agente com verificação TLS sempre habilitada
-    const agent = new Agent({
-      connect: {
-        rejectUnauthorized: true
-      }
-    });
-    fetchImpl = ((url: any, options: any) => {
-      return undiciFetch(url, {
-        ...options,
-        dispatcher: agent
-      });
-    }) as typeof fetch;
-  } catch {
-    throw new Error(
-      'fetch não está disponível. Instale undici: npm install undici\n' +
-      'Ou use Node.js 18+ que tem fetch nativo.'
-    );
-  }
-} else {
-  fetchImpl = fetch;
-}
+// Node.js >= 18 tem fetch nativo (exigido pelo campo engines do package.json)
+const fetchImpl: typeof fetch = fetch;
 
 export interface RequestOptions {
   method: string;
